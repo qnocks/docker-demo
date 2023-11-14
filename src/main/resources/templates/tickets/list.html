@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
+<head th:replace="fragments/general.html :: head"></head>
+<body>
+    <header th:insert="fragments/general.html :: header"></header>
+    <h1 class="title">Tickets</h1>
+    <div>
+        <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/tickets/new}" class="btn btn-primary">Add a ticket</a>
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Show</th>
+                <th scope="col">Date</th>
+                <th scope="col">Seat</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr th:each="ticket : ${tickets}">
+            <td th:text="${ticket.id}"></td>
+            <td th:text="${ticket.show.title}"></td>
+            <td th:text="${ticket.date}"></td>
+            <td th:text="${ticket.seat}"></td>
+            <td>
+                <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/tickets/{id}/delete(id=${ticket.id})}">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+   </table>
+</body>
+</html>

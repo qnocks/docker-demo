@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
+<head th:replace="fragments/general.html :: head"></head>
+<body>
+    <header th:insert="fragments/general.html :: header"></header>
+    <h1 class="title">Shows</h1>
+    <div>
+        <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/shows/new}" class="btn btn-primary">Add a show</a>
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Title</th>
+                <th scope="col">Description</th>
+                <th scope="col">Tickets</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr th:each="show : ${shows}">
+            <td th:text="${show.id}"></td>
+            <td th:text="${show.title}"></td>
+            <td th:text="${show.description}"></td>
+            <td th:text="${#lists.size(show.tickets)}"></td>
+            <td>
+                <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/shows/{id}/delete(id=${show.id})}">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+   </table>
+</body>
+</html>
